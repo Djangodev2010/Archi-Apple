@@ -1,0 +1,36 @@
+[project]
+name = "arckive"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Shouryaaaaa!", email = "shouryasrivastava456@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.1",
+    "psycopg2>=2.9.12",
+    "ruff>=0.16.4",
+]
+
+[project.scripts]
+arckive = "arckive:main"
+
+[build-system]
+requires = ["uv_build>=0.12.2,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/W: PEP8 errors/warnings, F: Pyflakes, B: bugbear (catches logic bugs), UP: modern Python syntax
+select = ["E", "W", "F", "B", "UP"]
+ignore = [
+    "E501", # Let ruff format handle line length automatically
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Django settings files often have unused imports or structural patterns that ruffle flags
+"**/settings*.py" = ["F401", "F403"]
