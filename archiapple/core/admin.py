@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Topic, SubTopic, Resource, ResourceImage
+from .models import Topic, SubTopic, Resource, CommumityResource, CommunityResourceImage
 
 # Register your models here.
 
 admin.site.register(Topic)
 admin.site.register(SubTopic)
 admin.site.register(Resource)
-admin.site.register(ResourceImage)
+admin.site.register(CommumityResource)
+admin.site.register(CommunityResourceImage)
