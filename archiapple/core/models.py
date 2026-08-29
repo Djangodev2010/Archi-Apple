@@ -23,7 +23,7 @@ class Topic(models.Model):
     topic_name = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return self.language
+        return self.topic_name
 
 class SubTopic(models.Model):
     """A model class for all the sub-topic in a topic (e.g., Django-Models, React-React Apps)"""
@@ -46,7 +46,7 @@ class Resource(models.Model):
     def __str__(self):
         return f'{self.title}-{self.topic}'
 
-class CommumityResource(models.Model):
+class CommunityResource(models.Model):
     """A separate resource model for resources uploaded by the community"""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -81,7 +81,7 @@ class CommumityResource(models.Model):
 class CommunityResourceImage(models.Model):
     """An images model for resources allowing the upload of multiple images(the images must be limited to only 3)"""
 
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='images')
+    resource = models.ForeignKey(CommunityResource, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='media/resource_images')
 
     def clean(self):
@@ -93,9 +93,7 @@ class CommunityResourceImage(models.Model):
         image_count = self.resource.images.count()
 
         # The validation logic
-        if image_count == 0:
-            raise ValidationError("You must Upload Atleast One Image!")
-        elif image_count > 3:
+        if image_count >= 3:
             raise ValidationError("You Can't Upload More Than 3 Images!")
 
     def __str__(self):
