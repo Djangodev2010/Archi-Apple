@@ -21,6 +21,7 @@ class Topic(models.Model):
     """ A model class for all the topics of a programming language (e.g., Python-Django, JavaScript-React)"""
 
     topic_name = models.CharField(max_length=255, default="")
+    topic_image = models.ImageField(upload_to='topic_images/')
 
     def __str__(self):
         return self.topic_name
@@ -28,7 +29,7 @@ class Topic(models.Model):
 class SubTopic(models.Model):
     """A model class for all the sub-topic in a topic (e.g., Django-Models, React-React Apps)"""
 
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='sub_topics')
     name = models.CharField(max_length=355, default="")
 
     def __str__(self):
@@ -38,8 +39,8 @@ class Resource(models.Model):
     """The main resource model, provided by the platform by default"""
 
     title = models.CharField(max_length=255, default="")
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, null=True, blank=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='official_resources')
+    sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, null=True, blank=True, related_name='official_resources')
     resource_link = models.URLField(blank=True, null=True)
     yt_video_link = models.URLField(blank=True, null=True)
 
@@ -49,11 +50,11 @@ class Resource(models.Model):
 class CommunityResource(models.Model):
     """A separate resource model for resources uploaded by the community"""
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='uploaded_resources')
     title = models.CharField(max_length=255, default="")
     short_description = models.CharField(max_length=355, default="")
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, blank=True, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='community_resources')
+    sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, blank=True, null=True, related_name='community_resources')
     resource_link = models.URLField(blank=True, null=True)
     yt_video_link = models.URLField(blank=True, null=True)
     
@@ -85,7 +86,7 @@ class CommunityResourceImage(models.Model):
     """An images model for resources allowing the upload of multiple images(the images must be limited to only 3)"""
 
     resource = models.ForeignKey(CommunityResource, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='media/resource_images')
+    image = models.ImageField(upload_to='resource_images')
 
     def clean(self):
         """Validate the number of images and restrict an upload of upto 3 images"""

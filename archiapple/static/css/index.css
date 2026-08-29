@@ -1,0 +1,86 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Modern Card Hover Effects */
+.topic-card {
+    border: none;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: #ffffff;
+}
+
+.topic-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Dynamic Icon Box Styling */
+.icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+/* Subtle background accents for categories */
+.bg-cs-light {
+    background-color: #eef2ff;
+    color: #4f46e5;
+}
+
+.bg-python-light {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.bg-js-light {
+    background-color: #fefce8;
+    color: #ca8a04;
+}
+
+.bg-django-light {
+    background-color: #f0fdf4;
+    color: #047857;
+}
+
+.bg-db-light {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.bg-ai-light {
+    background-color: #faf5ff;
+    color: #9333ea;
+}
+
+.badge-soft {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar .nav-link {
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover, 
+.navbar .nav-link.active {
+  color: #0d6efd !important;
+}
+
+.navbar .form-control:focus {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+}
