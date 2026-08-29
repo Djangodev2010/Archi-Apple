@@ -56,6 +56,9 @@ class CommunityResource(models.Model):
     sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, blank=True, null=True)
     resource_link = models.URLField(blank=True, null=True)
     yt_video_link = models.URLField(blank=True, null=True)
+    
+    def __str__(self):
+        return f'{self.title}-{self.user.username}'
 
     def clean(self):
         """Validating the resource to make sure only one type of resource is uploaded"""
