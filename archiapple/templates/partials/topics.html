@@ -1,0 +1,30 @@
+<div class="row g-4" id="topic-container">
+  {% for topic in topics %}
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card topic-card h-100 p-4 shadow-sm d-flex flex-column">
+        <!-- Topic Header: Logo & Title -->
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="topic-logo-box">
+            {% if topic.topic_image %}
+              <img src="{{ topic.topic_image.url }}" class="topic-logo-img" alt="{{ topic.topic_name }}" />
+            {% else %}
+              <i class="bi bi-code-slash text-primary fs-3"></i>
+            {% endif %}
+          </div>
+          <h5 class="fw-bold text-dark mb-0">{{ topic.topic_name }}</h5>
+        </div>
+
+        <!-- Orderly Tags -->
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <span class="badge badge-soft"><i class="bi bi-diagram-3 me-1 text-primary"></i> {{ topic.sub_topics.count }} Sub Topics</span>
+          <span class="badge badge-soft"><i class="bi bi-journal-bookmark me-1 text-success"></i> {{ topic.community_resources.count|add:1 }} Resources</span>
+        </div>
+
+        <!-- Footer Link -->
+        <div class="mt-auto pt-3 border-top">
+          <a href="{% url 'topic_detail' topic.id %}" class="stretched-link text-primary fw-semibold text-decoration-none small">Explore Resources &rarr;</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

@@ -23,6 +23,17 @@ def topic_detail(request, topic_id):
 
     return render(request, 'topic_detail.html', context)
 
+def search_topics(request):
+    query = request.GET.get('query', '')
+
+    topics = Topic.objects.filter(topic_name__icontains=query)
+
+    context = {
+        'topics': topics
+    }
+    
+    return render(request, 'partials/topics.html', context)
+
 def sub_topic_detail(request, sub_topic_id):
     sub_topic = SubTopic.objects.get(id=sub_topic_id)
     
