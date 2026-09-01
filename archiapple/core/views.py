@@ -45,12 +45,10 @@ def sub_topic_detail(request, sub_topic_id):
 
 def search_sub_topics(request):
     query = request.GET.get('query', '')
-    print(query)
     topic_id = request.GET.get('topic_id')
     topic = get_object_or_404(Topic, id=topic_id)
     sub_topics = SubTopic.objects.filter(topic=topic, name__icontains=query)
-    print(sub_topics)
-    
+
     context = {
         'sub_topics': sub_topics
     }
