@@ -151,13 +151,13 @@
                 <i class="bi bi-diagram-3 me-1 text-primary"></i> {{ topic.sub_topics.count }} Sub Topics
               </span>
               <span class="badge badge-soft">
-                <i class="bi bi-journal-bookmark me-1 text-success"></i> {{ topic.official_resources.count|add:topic.community_resources.count }} Resources
+                <i class="bi bi-journal-bookmark me-1 text-success"></i> {{ topic.community_resources.count|add:1 }} Resources
               </span>
             </div>
 
             <!-- Footer Link -->
             <div class="mt-auto pt-3 border-top">
-              <a href="{% url 'sub_topics' topic.id %}" class="stretched-link text-primary fw-semibold text-decoration-none small">
+              <a href="{% url 'topic_detail' topic.id %}" class="stretched-link text-primary fw-semibold text-decoration-none small">
                 Explore Resources &rarr;
               </a>
             </div>

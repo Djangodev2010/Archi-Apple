@@ -39,8 +39,8 @@ class Resource(models.Model):
     """The main resource model, provided by the platform by default"""
 
     title = models.CharField(max_length=255, default="")
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='official_resources')
-    sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, null=True, blank=True, related_name='official_resources')
+    topic = models.OneToOneField(Topic, on_delete=models.CASCADE, related_name='official_resource')
+    sub_topic = models.OneToOneField(SubTopic, on_delete=models.CASCADE, null=True, blank=True, related_name='official_resource')
     resource_link = models.URLField(blank=True, null=True)
     yt_video_link = models.URLField(blank=True, null=True)
 

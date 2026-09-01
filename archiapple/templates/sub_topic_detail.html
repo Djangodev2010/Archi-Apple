@@ -1,0 +1,420 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ subtopic.name }} | Resources | ArchiApple</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    .backdrop-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Subtopic Hero Banner */
+    .hero-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    /* Resource Cards */
+    .resource-card {
+      border: 1px solid #edf2f7;
+      border-radius: 16px;
+      background: #ffffff;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
+      border-color: #cbd5e1;
+    }
+
+    /* Like / Dislike Component Styling */
+      .like-dislike-bar {
+        transition: all 0.2s ease;
+      }
+
+      .btn-reaction {
+        width: 30px;
+        height: 30px;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        transition: all 0.2s ease;
+      }
+
+      .btn-reaction:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+      }
+
+      /* Active Liked State */
+      .btn-like.active {
+        color: #2563eb;
+        background-color: #dbeafe;
+      }
+
+      /* Active Disliked State */
+      .btn-dislike.active {
+        color: #dc2626;
+        background-color: #fee2e2;
+      }
+
+    /* Badges & Tags */
+    .badge-soft {
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+
+    .badge-tag-article {
+      background-color: #fef08a;
+      color: #854d0e;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .badge-tag-video {
+      background-color: #e9d5ff;
+      color: #6b21a8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Roadmap.sh-style Modal Styles */
+    .roadmap-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background-color: #ffffff;
+    }
+
+    .roadmap-recommended-card {
+      border: 1px solid #fde047;
+      background-color: #fefce8;
+      border-radius: 12px;
+    }
+
+    .resource-link {
+      color: #0f172a;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .resource-link:hover {
+      color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CSRF Token helper for JS -->
+  {% csrf_token %}
+
+  <!-- Modern Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top border-bottom bg-white bg-opacity-75 backdrop-blur">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark fs-5" href='{% url "index" %}'>
+        <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-2" style="width: 36px; height: 36px;">
+          <i class="bi bi-layers-fill fs-6"></i>
+        </span>
+        <span>Archi<span class="text-primary">Apple</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-2 text-dark"></i>
+      </button>
+
+      <div class="collapse navbar-collapse mt-3 mt-lg-0" id="mainNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
+          <li class="nav-item">
+            <a class="nav-link px-3" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3" href="#">Explore Topics</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+          <a href="#" class="btn btn-primary rounded-pill px-3 fw-semibold">
+            <i class="bi bi-plus-lg me-1"></i> Add Resource
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container py-5">
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Topics</a></li>
+        <li class="breadcrumb-item"><a href="#" class="text-decoration-none">{{ subtopic.topic.topic_name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ subtopic.name }}</li>
+      </ol>
+    </nav>
+
+    <!-- Subtopic Hero & Official Resource Banner -->
+    <div class="hero-card p-4 p-md-5 mb-5 shadow-sm">
+      <div class="row align-items-center">
+        <div class="col-lg-8 mb-3 mb-lg-0">
+          <div class="d-flex align-items-center gap-2 text-primary fw-semibold mb-2">
+            <i class="bi bi-patch-check-fill fs-5"></i>
+            <span>Official Learning Path</span>
+          </div>
+          <h1 class="fw-bold text-dark mb-2">{{ subtopic.name }}</h1>
+          <p class="text-muted mb-0">
+            {% if subtopic.description %}
+              {{ subtopic.description }}
+            {% else %}
+              Dive deep into {{ subtopic.name }} with official guides, documentation, and community-shared tutorials.
+            {% endif %}
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <button type="button" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#officialResourceModal" 
+                  class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm">
+            Official Resources <i class="bi bi-box-arrow-up-right ms-2 fs-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Resources Section Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h3 class="fw-bold text-dark mb-1">Community Resources</h3>
+        <p class="text-muted mb-0">Hand-picked guides, video tutorials, and links shared by developers.</p>
+      </div>
+      <span class="badge bg-white border text-dark px-3 py-2 rounded-pill fw-medium shadow-sm">
+        {{ subtopic.community_resources.count }} Contributions
+      </span>
+    </div>
+
+    <!-- Community Resources Grid -->
+    <div class="row g-4">
+      {% for resource in subtopic.community_resources.all %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card resource-card h-100 p-4 shadow-sm d-flex flex-column">
+            
+            <!-- Type Tag & Author Header -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              {% if resource.yt_video_link %}
+                <span class="badge-tag-video"><i class="bi bi-youtube me-1"></i> Video</span>
+              {% else %}
+                <span class="badge-tag-article"><i class="bi bi-file-text me-1"></i> Article</span>
+              {% endif %}
+
+              <span class="badge badge-soft">
+                <i class="bi bi-person-circle me-1"></i> {{ resource.user.username }}
+              </span>
+            </div>
+
+            <!-- Title & Description -->
+            <h5 class="fw-bold text-dark mb-2">{{ resource.title }}</h5>
+            <p class="text-muted small mb-4 flex-grow-1">
+              {{ resource.short_description|default:"No description provided." }}
+            </p>
+
+            <!-- Footer Actions: Like / Dislike + Resource Link -->
+            <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between gap-2">
+              
+              <!-- Upvote / Downvote Arrow Bar -->
+              <div class="like-dislike-bar d-flex align-items-center gap-1 bg-light p-1 rounded-pill border">
+                
+                <!-- Upvote Button -->
+                <button type="button" 
+                        class="btn btn-sm btn-reaction btn-like rounded-circle p-1 d-flex align-items-center justify-content-center" 
+                        onclick="handleReaction({{ resource.id }}, 'like', this)" 
+                        title="Upvote">
+                  <i class="bi bi-arrow-up-circle fs-6"></i>
+                </button>
+                <span class="like-count small fw-bold px-1 text-secondary" id="like-count-{{ resource.id }}">
+                  {{ resource.likes_count|default:0 }}
+                </span>
+
+                <div class="vr my-1 text-muted opacity-25"></div>
+
+                <!-- Downvote Button -->
+                <button type="button" 
+                        class="btn btn-sm btn-reaction btn-dislike rounded-circle p-1 d-flex align-items-center justify-content-center" 
+                        onclick="handleReaction({{ resource.id }}, 'dislike', this)" 
+                        title="Downvote">
+                  <i class="bi bi-arrow-down-circle fs-6"></i>
+                </button>
+                <span class="dislike-count small fw-bold px-1 text-secondary" id="dislike-count-{{ resource.id }}">
+                  {{ resource.dislikes_count|default:0 }}
+                </span>
+
+              </div>
+
+              <!-- Direct Link -->
+              {% if resource.yt_video_link %}
+                <a href="{{ resource.yt_video_link }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold ms-auto">
+                  Watch <i class="bi bi-play-fill ms-1"></i>
+                </a>
+              {% else %}
+                <a href="{{ resource.resource_link }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold ms-auto">
+                  Read <i class="bi bi-box-arrow-up-right ms-1"></i>
+                </a>
+              {% endif %}
+
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <!-- Official Resource Info Modal (Roadmap.sh Style Drawer) -->
+  <div class="modal fade" id="officialResourceModal" tabindex="-1" aria-labelledby="officialResourceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+        
+        <!-- Modal Header -->
+        <div class="modal-header border-0 pb-0 pt-4 px-4 bg-white">
+          <button type="button" class="btn-close shadow-none ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body p-4 pt-0">
+          
+          <h2 class="fw-bold text-dark mb-2" id="officialResourceModalLabel">
+            {{ subtopic.name }} Official Guide
+          </h2>
+          <p class="text-secondary small mb-4" style="line-height: 1.6;">
+            Recommended official documentation and curated tutorials to master {{ subtopic.name }}.
+          </p>
+
+          <div class="d-flex flex-column gap-4">
+
+            <!-- 1. Main Official Recommended Card -->
+            <div class="roadmap-recommended-card p-3 p-md-4">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-1 text-warning-emphasis fw-semibold small">
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <span>Official Documentation</span>
+                </div>
+              </div>
+              <h5 class="fw-bold text-dark mb-2">
+                {{ subtopic.name }} Docs & Standard Reference
+              </h5>
+              <p class="text-muted small mb-3">
+                The primary reference manual maintained by the official project maintainers.
+              </p>
+              <a href="{{ subtopic.topic.official_link|default:'#' }}" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
+                Open Official Docs <i class="bi bi-box-arrow-up-right ms-1"></i>
+              </a>
+            </div>
+
+            <!-- 2. Additional Official Links -->
+            <div class="roadmap-card p-3 p-md-4">
+              <div class="d-flex align-items-center gap-2 text-primary fw-semibold small mb-3">
+                <i class="bi bi-journal-code"></i>
+                <span>Getting Started Links</span>
+              </div>
+
+              <div class="d-flex flex-column gap-3">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge-tag-article">Guide</span>
+                  <a href="{{ subtopic.topic.official_link|default:'#' }}" target="_blank" rel="noopener" class="resource-link small">
+                    Quick Start & Installation Guide
+                  </a>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge-tag-video">Tutorial</span>
+                  <a href="{{ subtopic.topic.secondary_official_link|default:'#' }}" target="_blank" rel="noopener" class="resource-link small">
+                    Official API & Architecture Overview
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/bootstrap.bundle.min.js"></script>
+
+  <!-- Vote Handling JavaScript -->
+  <script>
+    function handleVote(resourceId, action, buttonElement) {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch(`/resource/${resourceId}/vote/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ action: action })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Update vote count text
+          document.getElementById(`vote-count-${resourceId}`).innerText = data.new_vote_count;
+          
+          // Toggle UI styling
+          const container = buttonElement.closest('.vote-container');
+          container.querySelectorAll('.btn-vote').forEach(btn => btn.classList.remove('upvoted', 'downvoted'));
+          
+          if (data.user_action === 'upvote') {
+            buttonElement.classList.add('upvoted');
+          } else if (data.user_action === 'downvote') {
+            buttonElement.classList.add('downvoted');
+          }
+        }
+      })
+      .catch(error => console.error('Error voting:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalElement = document.getElementById('officialResourceModal');
+      if (modalElement) {
+        modalElement.addEventListener('hide.bs.modal', function () {
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
