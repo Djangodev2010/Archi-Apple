@@ -1,0 +1,114 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.backdrop-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Subtopic Hero Banner */
+.hero-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Resource Cards */
+.resource-card {
+    border: 1px solid #edf2f7;
+    border-radius: 16px;
+    background: #ffffff;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
+    border-color: #cbd5e1;
+}
+
+/* Like / Dislike Component Styling */
+.like-dislike-bar {
+    transition: all 0.2s ease;
+}
+
+.btn-reaction {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.btn-reaction:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+/* Active Liked State */
+.btn-like.active {
+    color: #2563eb;
+    background-color: #dbeafe;
+}
+
+/* Active Disliked State */
+.btn-dislike.active {
+    color: #dc2626;
+    background-color: #fee2e2;
+}
+
+/* Badges & Tags */
+.badge-soft {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.badge-tag-article {
+    background-color: #fef08a;
+    color: #854d0e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.badge-tag-video {
+    background-color: #e9d5ff;
+    color: #6b21a8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* Roadmap.sh-style Modal Styles */
+.roadmap-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+.roadmap-recommended-card {
+    border: 1px solid #fde047;
+    background-color: #fefce8;
+    border-radius: 12px;
+}
+
+.resource-link {
+    color: #0f172a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.resource-link:hover {
+    color: #2563eb;
+}

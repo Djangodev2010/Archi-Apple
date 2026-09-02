@@ -7,126 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ subtopic.name }} | Resources | ArchiApple</title>
 
+  <link rel="stylesheet" href="{% static 'css/sub_topic_detail.css' %}">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
 
   <style>
-    body {
-      background-color: #f8f9fa;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-
-    .backdrop-blur {
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    /* Subtopic Hero Banner */
-    .hero-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    }
-
-    /* Resource Cards */
-    .resource-card {
-      border: 1px solid #edf2f7;
-      border-radius: 16px;
-      background: #ffffff;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
-      border-color: #cbd5e1;
-    }
-
-    /* Like / Dislike Component Styling */
-      .like-dislike-bar {
-        transition: all 0.2s ease;
-      }
-
-      .btn-reaction {
-        width: 30px;
-        height: 30px;
-        border: none;
-        background: transparent;
-        color: #64748b;
-        transition: all 0.2s ease;
-      }
-
-      .btn-reaction:hover {
-        background-color: #e2e8f0;
-        color: #0f172a;
-      }
-
-      /* Active Liked State */
-      .btn-like.active {
-        color: #2563eb;
-        background-color: #dbeafe;
-      }
-
-      /* Active Disliked State */
-      .btn-dislike.active {
-        color: #dc2626;
-        background-color: #fee2e2;
-      }
-
-    /* Badges & Tags */
-    .badge-soft {
-      font-size: 0.75rem;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 500;
-      background-color: #f1f5f9;
-      color: #475569;
-    }
-
-    .badge-tag-article {
-      background-color: #fef08a;
-      color: #854d0e;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    .badge-tag-video {
-      background-color: #e9d5ff;
-      color: #6b21a8;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    /* Roadmap.sh-style Modal Styles */
-    .roadmap-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      background-color: #ffffff;
-    }
-
-    .roadmap-recommended-card {
-      border: 1px solid #fde047;
-      background-color: #fefce8;
-      border-radius: 12px;
-    }
-
-    .resource-link {
-      color: #0f172a;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .resource-link:hover {
-      color: #2563eb;
-    }
+    
   </style>
 </head>
 <body>
@@ -137,7 +29,7 @@
   <!-- Modern Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top border-bottom bg-white bg-opacity-75 backdrop-blur">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark fs-5" href='{% url "index" %}'>
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark fs-5" href="{% url 'index' %}">
         <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-2" style="width: 36px; height: 36px;">
           <i class="bi bi-layers-fill fs-6"></i>
         </span>
@@ -322,7 +214,7 @@
               <p class="text-muted small mb-3">
                 The primary reference manual maintained by the official project maintainers.
               </p>
-              <a href="{{ subtopic.topic.official_link|default:'#' }}" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
+              <a href="{{subtopic.official_resource.official_doc_link}}"class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
                 Open Official Docs <i class="bi bi-box-arrow-up-right ms-1"></i>
               </a>
             </div>
@@ -337,15 +229,15 @@
               <div class="d-flex flex-column gap-3">
                 <div class="d-flex align-items-center gap-2">
                   <span class="badge-tag-article">Guide</span>
-                  <a href="{{ subtopic.topic.official_link|default:'#' }}" target="_blank" rel="noopener" class="resource-link small">
+                  <a href="{{ subtopic.official_resource.resource_link }}" target="_blank" rel="noopener" class="resource-link small">
                     Quick Start & Installation Guide
                   </a>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
                   <span class="badge-tag-video">Tutorial</span>
-                  <a href="{{ subtopic.topic.secondary_official_link|default:'#' }}" target="_blank" rel="noopener" class="resource-link small">
-                    Official API & Architecture Overview
+                  <a href="{{ subtopic.official_resource.resource_link }}" target="_blank" rel="noopener" class="resource-link small">
+                    Recommended Tutorial Video If You Prefer Watching And Building
                   </a>
                 </div>
               </div>
@@ -361,51 +253,6 @@
 
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/bootstrap.bundle.min.js"></script>
-
-  <!-- Vote Handling JavaScript -->
-  <script>
-    function handleVote(resourceId, action, buttonElement) {
-      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-      fetch(`/resource/${resourceId}/vote/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify({ action: action })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Update vote count text
-          document.getElementById(`vote-count-${resourceId}`).innerText = data.new_vote_count;
-          
-          // Toggle UI styling
-          const container = buttonElement.closest('.vote-container');
-          container.querySelectorAll('.btn-vote').forEach(btn => btn.classList.remove('upvoted', 'downvoted'));
-          
-          if (data.user_action === 'upvote') {
-            buttonElement.classList.add('upvoted');
-          } else if (data.user_action === 'downvote') {
-            buttonElement.classList.add('downvoted');
-          }
-        }
-      })
-      .catch(error => console.error('Error voting:', error));
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const modalElement = document.getElementById('officialResourceModal');
-      if (modalElement) {
-        modalElement.addEventListener('hide.bs.modal', function () {
-          if (document.activeElement instanceof HTMLElement) {
-            document.activeElement.blur();
-          }
-        });
-      }
-    });
-  </script>
 
 </body>
 </html>

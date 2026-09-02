@@ -39,10 +39,11 @@ class Resource(models.Model):
     """The main resource model, provided by the platform by default"""
 
     title = models.CharField(max_length=255, default="")
-    topic = models.OneToOneField(Topic, on_delete=models.CASCADE, related_name='official_resource')
+    topic = models.OneToOneField(Topic, on_delete=models.CASCADE, related_name='official_resource', null=True, blank=True)
     sub_topic = models.OneToOneField(SubTopic, on_delete=models.CASCADE, null=True, blank=True, related_name='official_resource')
-    resource_link = models.URLField(blank=True, null=True)
-    yt_video_link = models.URLField(blank=True, null=True)
+    official_doc_link = models.URLField()
+    resource_link = models.URLField()
+    yt_video_link = models.URLField()
 
     def __str__(self):
         return f'{self.title}-{self.topic}'

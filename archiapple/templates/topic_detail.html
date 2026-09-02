@@ -115,7 +115,7 @@
 
   </div>
 
-  <!-- Official Resource Info Modal (Roadmap.sh Style) -->
+  <!-- Official Resource Info Modal (Roadmap.sh Style Drawer) -->
   <div class="modal fade" id="officialResourceModal" tabindex="-1" aria-labelledby="officialResourceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
@@ -128,37 +128,53 @@
         <!-- Modal Body -->
         <div class="modal-body p-4 pt-0">
           
-          <!-- Resource Title & Short Description -->
           <h2 class="fw-bold text-dark mb-2" id="officialResourceModalLabel">
-            {{ topic.topic_name }}
+            {{ topic.topic_name }} Official Guide
           </h2>
           <p class="text-secondary small mb-4" style="line-height: 1.6;">
-            {{ topic.description|default:"Master key concepts and fundamental topics through recommended official guides, free tutorials, and practical video courses." }}
+            Recommended official documentation and curated tutorials to master {{ topic.topic_name }}.
           </p>
 
           <div class="d-flex flex-column gap-4">
-            <!-- 2. Free Resources Section -->
+
+            <!-- 1. Main Official Recommended Card -->
+            <div class="roadmap-recommended-card p-3 p-md-4">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-1 text-warning-emphasis fw-semibold small">
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <span>Official Documentation</span>
+                </div>
+              </div>
+              <h5 class="fw-bold text-dark mb-2">
+                {{ topic.topic_name }} Docs & Standard Reference
+              </h5>
+              <p class="text-muted small mb-3">
+                The primary reference manual maintained by the official project maintainers.
+              </p>
+              <a href="{{topic.official_resource.official_doc_link}}"class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
+                Open Official Docs <i class="bi bi-box-arrow-up-right ms-1"></i>
+              </a>
+            </div>
+
+            <!-- 2. Additional Official Links -->
             <div class="roadmap-card p-3 p-md-4">
-              <div class="d-flex align-items-center gap-2 text-success fw-semibold small mb-3">
-                <i class="bi bi-heart-fill"></i>
-                <span>Free Resources</span>
+              <div class="d-flex align-items-center gap-2 text-primary fw-semibold small mb-3">
+                <i class="bi bi-journal-code"></i>
+                <span>Getting Started Links</span>
               </div>
 
               <div class="d-flex flex-column gap-3">
-                <!-- Resource Item 1 -->
-
                 <div class="d-flex align-items-center gap-2">
-                  <span class="badge-tag-article">Article</span>
+                  <span class="badge-tag-article">Guide</span>
                   <a href="{{ topic.official_resource.resource_link }}" target="_blank" rel="noopener" class="resource-link small">
-                    What is {{ topic.official_resource.title }}?
+                    Quick Start & Installation Guide
                   </a>
                 </div>
 
-                <!-- Resource Item 3 -->
                 <div class="d-flex align-items-center gap-2">
-                  <span class="badge-tag-video">Video</span>
-                  <a href="{{ topic.official_resource.yt_video_link }}" target="_blank" rel="noopener" class="resource-link small">
-                    A Beginner's Guide to {{ topic.topic_name }}
+                  <span class="badge-tag-video">Tutorial</span>
+                  <a href="{{ topic.official_resource.resource_link }}" target="_blank" rel="noopener" class="resource-link small">
+                    Recommended Tutorial Video If You Prefer Watching And Building
                   </a>
                 </div>
               </div>
