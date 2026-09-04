@@ -21,7 +21,7 @@ def topic_detail(request, topic_id):
         'sub_topics': sub_topics
     }
 
-    return render(request, 'topic_detail.html', context)
+    return render(request, 'core/topic_detail.html', context)
 
 def search_topics(request):
     query = request.GET.get('query', '')
@@ -41,7 +41,7 @@ def sub_topic_detail(request, sub_topic_id):
         'subtopic': sub_topic
     }
     
-    return render(request, 'sub_topic_detail.html', context)
+    return render(request, 'core/sub_topic_detail.html', context)
 
 def search_sub_topics(request):
     query = request.GET.get('query', '')
