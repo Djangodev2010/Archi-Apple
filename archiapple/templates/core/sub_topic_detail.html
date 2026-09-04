@@ -7,19 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ subtopic.name }} | Resources | ArchiApple</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.js" integrity="sha384-Q+Dky3iHVJOr6wUjQ4ulh6uQ76an/t+ak1+PjMVaxRjbZamFLAG+u9InkfjbsEQf" crossorigin="anonymous"></script>
+  <!-- External Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/sub_topic_detail.css' %}">
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
 
-  <style>
-    
-  </style>
 </head>
 <body>
 
@@ -60,12 +55,12 @@
   </nav>
 
   <!-- Main Container -->
-  <div class="container py-5">
+  <div class="container py-4 py-md-5">
 
     <!-- Subtopic Hero & Official Resource Banner -->
     <div class="hero-card p-4 p-md-5 mb-5 shadow-sm">
-      <div class="row align-items-center">
-        <div class="col-lg-8 mb-3 mb-lg-0">
+      <div class="row align-items-center gy-3">
+        <div class="col-lg-8">
           <div class="d-flex align-items-center gap-2 text-primary fw-semibold mb-2">
             <i class="bi bi-patch-check-fill fs-5"></i>
             <span>Official Learning Path</span>
@@ -83,97 +78,60 @@
           <button type="button" 
                   data-bs-toggle="modal" 
                   data-bs-target="#officialResourceModal" 
-                  class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm">
+                  class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm w-100 w-lg-auto">
             Official Resources <i class="bi bi-box-arrow-up-right ms-2 fs-6"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Community Resources Section Header -->
-    <div class="d-flex align-items-center justify-content-between mb-4">
-      <div>
-        <h3 class="fw-bold text-dark mb-1">Community Resources</h3>
-        <p class="text-muted mb-0">Hand-picked guides, video tutorials, and links shared by developers.</p>
+    <!-- Community Resources Section Header & Responsive Search Bar -->
+    <div class="row align-items-center gy-3 mb-4">
+      
+      <!-- Left Side: Title & Counter Badge -->
+      <div class="col-12 col-md-6 col-lg-7">
+        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+          <h3 class="fw-bold text-dark mb-0">Community Resources</h3>
+          <span class="badge bg-white border text-dark px-3 py-2 rounded-pill fw-medium shadow-sm">
+            {{ subtopic.community_resources.count }} Contributions
+          </span>
+        </div>
+        <p class="text-muted small mb-0">Hand-picked guides, video tutorials, and links shared by developers.</p>
       </div>
-      <span class="badge bg-white border text-dark px-3 py-2 rounded-pill fw-medium shadow-sm">
-        {{ subtopic.community_resources.count }} Contributions
-      </span>
+
+      <!-- Right Side: Responsive Search Bar -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <form action=""
+              hx-get="{% url 'search_resources' topic_id=subtopic.topic.id sub_topic_id=subtopic.id %}"
+              hx-trigger="input changed delay:500ms"
+              hx-target="#communityResourceGrid"
+              hx-swap="innerHTML"
+              class="m-0">
+          <div class="input-group resource-search-box border shadow-sm">
+            <span class="input-group-text ps-3 text-muted border-0 bg-transparent">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" 
+                  name="q"
+                  id="resourceSearchInput" 
+                  class="form-control ps-2 py-2 text-dark border-0 shadow-none" 
+                  placeholder="Search guides, videos, authors..." 
+                  aria-label="Search community resources" />
+          </div>
+        </form>
+      </div>
+
     </div>
 
     <!-- Community Resources Grid -->
-    <div class="row g-4">
-      {% for resource in subtopic.community_resources.all %}
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card resource-card h-100 p-4 shadow-sm d-flex flex-column">
-            
-            <!-- Type Tag & Author Header -->
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              {% if resource.yt_video_link %}
-                <span class="badge-tag-video"><i class="bi bi-youtube me-1"></i> Video</span>
-              {% else %}
-                <span class="badge-tag-article"><i class="bi bi-file-text me-1"></i> Article</span>
-              {% endif %}
+    <div class="row g-4" id="communityResourceGrid">
+      {% include "partials/community_resources.html" %}
+    </div>
 
-              <span class="badge badge-soft">
-                <i class="bi bi-person-circle me-1"></i> {{ resource.user.username }}
-              </span>
-            </div>
-
-            <!-- Title & Description -->
-            <h5 class="fw-bold text-dark mb-2">{{ resource.title }}</h5>
-            <p class="text-muted small mb-4 flex-grow-1">
-              {{ resource.short_description|default:"No description provided." }}
-            </p>
-
-            <!-- Footer Actions: Like / Dislike + Resource Link -->
-            <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between gap-2">
-              
-              <!-- Upvote / Downvote Arrow Bar -->
-              <div class="like-dislike-bar d-flex align-items-center gap-1 bg-light p-1 rounded-pill border">
-                
-                <!-- Upvote Button -->
-                <button type="button" 
-                        class="btn btn-sm btn-reaction btn-like rounded-circle p-1 d-flex align-items-center justify-content-center" 
-                        onclick="handleReaction({{ resource.id }}, 'like', this)" 
-                        title="Upvote">
-                  <i class="bi bi-arrow-up-circle fs-6"></i>
-                </button>
-                <span class="like-count small fw-bold px-1 text-secondary" id="like-count-{{ resource.id }}">
-                  {{ resource.likes_count|default:0 }}
-                </span>
-
-                <div class="vr my-1 text-muted opacity-25"></div>
-
-                <!-- Downvote Button -->
-                <button type="button" 
-                        class="btn btn-sm btn-reaction btn-dislike rounded-circle p-1 d-flex align-items-center justify-content-center" 
-                        onclick="handleReaction({{ resource.id }}, 'dislike', this)" 
-                        title="Downvote">
-                  <i class="bi bi-arrow-down-circle fs-6"></i>
-                </button>
-                <span class="dislike-count small fw-bold px-1 text-secondary" id="dislike-count-{{ resource.id }}">
-                  {{ resource.dislikes_count|default:0 }}
-                </span>
-
-              </div>
-
-              <!-- Direct Link -->
-              {% if resource.yt_video_link %}
-                <a href="{{ resource.yt_video_link }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold ms-auto">
-                  Watch <i class="bi bi-play-fill ms-1"></i>
-                </a>
-              {% else %}
-                <a href="{{ resource.resource_link }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-semibold ms-auto">
-                  Read <i class="bi bi-box-arrow-up-right ms-1"></i>
-                </a>
-              {% endif %}
-
-            </div>
-
-          </div>
-        </div>
-      {% endfor %}
+    <!-- No Search Results Placeholder -->
+    <div id="noResultsMessage" class="text-center py-5 d-none">
+      <i class="bi bi-search fs-1 text-muted opacity-50 mb-3 d-block"></i>
+      <h5 class="fw-semibold text-muted">No resources match your search.</h5>
     </div>
 
   </div>
@@ -214,7 +172,7 @@
               <p class="text-muted small mb-3">
                 The primary reference manual maintained by the official project maintainers.
               </p>
-              <a href="{{subtopic.official_resource.official_doc_link}}"class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
+              <a href="{{ subtopic.official_resource.official_doc_link }}" target="_blank" rel="noopener" class="btn btn-warning btn-sm rounded-3 fw-bold px-3">
                 Open Official Docs <i class="bi bi-box-arrow-up-right ms-1"></i>
               </a>
             </div>

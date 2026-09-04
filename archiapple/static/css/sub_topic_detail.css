@@ -8,6 +8,63 @@ body {
     -webkit-backdrop-filter: blur(12px);
 }
 
+/* Fully Responsive Search Bar Styling */
+.resource-search-box {
+    border-radius: 50rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.resource-search-box:focus-within {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12) !important;
+    border-color: #93c5fd !important;
+}
+
+.resource-search-box .input-group-text {
+    border: none;
+    background: transparent;
+}
+
+.resource-search-box .form-control {
+    border: none;
+    box-shadow: none !important;
+    background: transparent;
+}
+
+.resource-search-box .form-control::placeholder {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* Badges & Tags */
+.badge-soft {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.badge-tag-article {
+    background-color: #fef08a;
+    color: #854d0e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.badge-tag-video {
+    background-color: #e9d5ff;
+    color: #6b21a8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
 /* Subtopic Hero Banner */
 .hero-card {
     border: 1px solid #e2e8f0;
@@ -111,4 +168,60 @@ body {
 
 .resource-link:hover {
     color: #2563eb;
+}
+/* Fully Responsive Search Bar Styling */
+.resource-search-box {
+    border-radius: 50rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.resource-search-box:focus-within {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12) !important;
+    border-color: #93c5fd !important;
+}
+
+.resource-search-box .input-group-text {
+    border: none;
+    background: transparent;
+}
+
+.resource-search-box .form-control {
+    border: none;
+    box-shadow: none !important;
+    background: transparent;
+}
+
+.resource-search-box .form-control::placeholder {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* Badges & Tags */
+.badge-soft {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.badge-tag-article {
+    background-color: #fef08a;
+    color: #854d0e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.badge-tag-video {
+    background-color: #e9d5ff;
+    color: #6b21a8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
 }
