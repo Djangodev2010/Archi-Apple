@@ -6,11 +6,11 @@ from django.db.models import Q
 
 def index(request):
     topics = Topic.objects.all()
-    
+
     context = {
         'topics': topics
     }
-    
+
     return render(request, 'index.html', context)
 
 def topic_detail(request, topic_id):
@@ -32,18 +32,18 @@ def search_topics(request):
     context = {
         'topics': topics
     }
-    
+
     return render(request, 'partials/topics.html', context)
 
 def sub_topic_detail(request, sub_topic_id):
     sub_topic = SubTopic.objects.get(id=sub_topic_id)
     community_resources = CommunityResource.objects.filter(sub_topic=sub_topic)
-    
+
     context = {
         'subtopic': sub_topic,
         'community_resources': community_resources
     }
-    
+
     return render(request, 'core/sub_topic_detail.html', context)
 
 def search_sub_topics(request):
@@ -55,7 +55,7 @@ def search_sub_topics(request):
     context = {
         'sub_topics': sub_topics
     }
-    
+
     return render(request, 'partials/sub_topics.html', context)
 
 def search_resources(request, topic_id, sub_topic_id=None):

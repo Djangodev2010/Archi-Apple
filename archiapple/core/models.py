@@ -58,7 +58,7 @@ class CommunityResource(models.Model):
     sub_topic = models.ForeignKey(SubTopic, on_delete=models.CASCADE, blank=True, null=True, related_name='community_resources')
     resource_link = models.URLField(blank=True, null=True)
     yt_video_link = models.URLField(blank=True, null=True)
-    
+
     def __str__(self):
         return f'{self.title}-{self.user.username}'
 
