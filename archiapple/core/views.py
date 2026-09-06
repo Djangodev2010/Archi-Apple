@@ -15,14 +15,29 @@ def index(request):
 
 def topic_detail(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
-    sub_topics = SubTopic.objects.filter(topic=topic)
+    sub_topics = SubTopic.objects.filter(topic=topic)[:3]
+    community_resources = CommunityResource.objects.filter(topic=topic, sub_topic=None)
 
     context = {
         'topic': topic,
-        'sub_topics': sub_topics
+        'sub_topics': sub_topics,
+        'community_resources': community_resources
     }
 
     return render(request, 'core/topic_detail.html', context)
+
+def sub_topics_list(request, topic_id):
+    topic = get_object_or_404(Topic, id=topic_id)
+    sub_topics = SubTopic.objects.filter(topic=topic)
+    
+    print(sub_topics)
+    
+    context = {
+        'sub_topics': sub_topics,
+        'topic': topic
+    }
+    
+    return render(request, 'core/sub_topics_list.html', context)
 
 def search_topics(request):
     query = request.GET.get('query', '')
@@ -63,7 +78,7 @@ def search_resources(request, topic_id, sub_topic_id=None):
     if sub_topic_id:
         topic = get_object_or_404(Topic, id=topic_id)
         sub_topic = get_object_or_404(SubTopic, id=sub_topic_id)
-        community_resources =  CommunityResource.objects.filter(Q(title__icontains=query) | Q(short_description__icontains=query), topic=topic, sub_topic=sub_topic)
+        community_resources = CommunityResource.objects.filter(Q(title__icontains=query) | Q(short_description__icontains=query), topic=topic, sub_topic=sub_topic)
         context = {
             'community_resources': community_resources
         }
@@ -71,7 +86,7 @@ def search_resources(request, topic_id, sub_topic_id=None):
         return render(request, 'partials/community_resources.html', context)
     else:
         topic = get_object_or_404(Topic, id=topic_id)
-        community_resources =  CommunityResource.objects.filter(topic=topic)
+        community_resources =  CommunityResource.objects.filter(Q(title__icontains=query) | Q(short_description__icontains=query), topic=topic, sub_topic=None)
         context = {
             'community_resources': community_resources
         }

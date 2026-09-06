@@ -44,25 +44,6 @@
           </li>
         </ul>
 
-        <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
-          <form 
-            class="position-relative me-2"
-            role="search"
-            hx-get='{% url "search_sub_topics" %}'
-            hx-target='#sub-topics-container'
-            hx-trigger='input changed delay:500ms'
-            hx-swap='innerHTML'>
-            <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-            <input 
-              class="form-control rounded-pill ps-5 bg-light border-0" 
-              type="search" placeholder="Search subtopics..." 
-              aria-label="Search" 
-              style="width: 220px;"
-              name='query' />
-            <input type="hidden" name="topic_id" value="{{topic.id}}">
-          </form>
-          <a href="#" class="btn btn-light rounded-pill px-3 fw-semibold text-dark">Log In</a>
-        </div>
       </div>
     </div>
   </nav>
@@ -102,7 +83,7 @@
     <!-- Subtopics Section Header -->
     <div class="d-flex align-items-center justify-content-between mb-4">
       <div>
-        <h3 class="fw-bold text-dark mb-1">Choose a Subtopic</h3>
+        <a href="{% url 'sub_topics_list' topic.id %}" style="text-decoration: none;"><h3 class="fw-bold text-dark mb-1">Choose a Subtopic -></h3></a>
         <p class="text-muted mb-0">Select a specific area or framework to dive into dedicated resources.</p>
       </div>
       <span class="badge bg-white border text-dark px-3 py-2 rounded-pill fw-medium shadow-sm">
@@ -113,6 +94,55 @@
     <!-- Subtopics Cards Grid -->
     {% include "partials/sub_topics.html" %}
 
+    <!-- Community Resources Section Header & Responsive Search Bar -->
+    <div class="row align-items-center gy-3 mb-4 mt-5">
+      
+      <!-- Left Side: Title & Counter Badge -->
+      <div class="col-12 col-md-6 col-lg-7">
+        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+          <h3 class="fw-bold text-dark mb-0">Community Resources</h3>
+          <span class="badge bg-white border text-dark px-3 py-2 rounded-pill fw-medium shadow-sm">
+            {{ subtopic.community_resources.count }} Contributions
+          </span>
+        </div>
+        <p class="text-muted small mb-0">Hand-picked guides, video tutorials, and links shared by developers.</p>
+      </div>
+
+      <!-- Right Side: Responsive Search Bar -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <form action=""
+              hx-get="{% url 'search_resources' topic_id=topic.id %}"
+              hx-trigger="input changed delay:500ms"
+              hx-target="#communityResourceGrid"
+              hx-swap="innerHTML"
+              class="m-0">
+          <div class="input-group resource-search-box border shadow-sm">
+            <span class="input-group-text ps-3 text-muted border-0 bg-transparent">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" 
+                  name="q"
+                  id="resourceSearchInput" 
+                  class="form-control ps-2 py-2 text-dark border-0 shadow-none" 
+                  placeholder="Search guides, videos, authors..." 
+                  aria-label="Search community resources" />
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Community Resources Grid -->
+    <div class="row g-4" id="communityResourceGrid">
+      {% include "partials/community_resources.html" %}
+    </div>
+
+    <!-- No Search Results Placeholder -->
+    <div id="noResultsMessage" class="text-center py-5 d-none">
+      <i class="bi bi-search fs-1 text-muted opacity-50 mb-3 d-block"></i>
+      <h5 class="fw-semibold text-muted">No resources match your search.</h5>
+    </div>
+    
   </div>
 
   <!-- Official Resource Info Modal (Roadmap.sh Style Drawer) -->

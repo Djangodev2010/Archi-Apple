@@ -74,10 +74,15 @@ body {
 
 /* Resource Cards */
 .resource-card {
-    border: 1px solid #edf2f7;
-    border-radius: 16px;
-    background: #ffffff;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid #edf2f7 !important;
+        border-radius: 16px !important;
+        background: #ffffff;
+        /* Explicitly transition the properties being changed */
+        transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+            box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+            border-color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        will-change: transform, box-shadow;
+        cursor: pointer;
 }
 
 .resource-card:hover {
