@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/*
+  ArchiApple design tokens — exact values from the approved style guide.
+  Referenced as utility classes: bg-ink, text-forest, text-sky, bg-surface,
+  text-muted, text-headers.
+*/
+@theme {
+  /* Typeface — Inter, the only approved font (headings + body) */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Colors */
+  --color-ink: #0f172a; /* primary / text */
+  --color-forest: #10b981; /* accent / CTAs */
+  --color-sky: #3b82f6; /* links */
+  --color-surface: #e5e7eb; /* backgrounds / borders */
+  --color-muted: #64748b; /* secondary text */
+  --color-headers: #111827; /* headings */
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+}
