@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Leaf, Search, ShieldCheck, Users } from 'lucide-react'
-import { HeroIllustration } from './Illustrations'
+import { MountainTrail } from '../assets/illustrations/MountainTrail'
+
 
 const trustPoints = [
   { icon: ShieldCheck, label: 'Vetted & ranked resources' },
@@ -70,7 +71,8 @@ export function Hero() {
           </ul>
         </div>
 
-        <HeroIllustration className="order-last mx-auto w-full max-w-sm lg:order-none lg:max-w-none" />
+        <MountainTrail className="order-last mx-auto w-full max-w-sm lg:order-none lg:max-w-none" />
+
       </div>
     </section>
   )
